@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+    mongodb:
+        image: mongo:latest
+        volumes:
+            - 'data:/data/db'
+        networks:
+            - nodejs-app
+
+    nodejs:
+        build: .
+        ports:
+            - '8002:3000'
+        depends_on:
+            - mongodb
+        networks:
+            - nodejs-app
+        environment:
+            MONGODB_URI: mongodb://mongodb:27017/demo
+            PORT: 3000
+
+networks:
+    nodejs-app:
+
+volumes:
+    data:

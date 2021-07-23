@@ -1,0 +1,25 @@
+version: "3.8"
+
+services: 
+    mysql:
+        image: mysql
+        volumes: 
+            - "./obo.sql:/docker-entrypoint-initdb.d/init.sql"
+        environment: 
+            MYSQL_DATABASE : obo
+            MYSQL_PASSWORD: 123456
+            MYSQL_USER: admin
+        networks: 
+            - obo-network
+    
+    web:
+        build: .
+        ports: 
+            - "8005:8080"
+        depends_on:
+            - mysql
+        networks: 
+            - obo-network
+
+networks: 
+    obo-network:
