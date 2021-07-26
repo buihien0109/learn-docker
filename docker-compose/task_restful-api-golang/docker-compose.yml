@@ -1,0 +1,25 @@
+version: "3.8"
+
+services: 
+  mysql:
+    image: mysql:5.7
+    environment: 
+      - MYSQL_USER=thuongnn
+      - MYSQL_PASSWORD="098poiA#"
+      - MYSQL_DATABASE="rest_api"
+      - MYSQL_ROOT_PASSWORD="098poiA#"
+    volumes: 
+      - "data:/var/lib/mysql"
+
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "8081:8080"
+    depends_on:
+      - mysql
+
+volumes: 
+  data:
+    

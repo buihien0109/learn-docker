@@ -1,0 +1,29 @@
+version: "3.8"
+
+services: 
+  postgresql:
+    image: thuongnn1997/todo-app-db:latest
+    volumes: 
+      - "todo_data:/var/lib/postgresql/data"
+    networks: 
+      - todo-app
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root123
+      - POSTGRES_DB=registry
+
+  app:
+    image: thuongnn1997/todo-app:latest
+    networks:
+      - todo-app
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgresql
+
+networks: 
+  todo-app:
+    external: true
+
+volumes: 
+  todo_data:
