@@ -22,8 +22,8 @@ WORKDIR /app
 
 COPY --from=builder /build/backend .
 
-COPY --from=builder /build/config/build/.env .
+COPY ./config/app/* ./
 
-COPY --from=builder /build/config/build/build.conf .
+EXPOSE 8080
 
 CMD ["./backend"]
