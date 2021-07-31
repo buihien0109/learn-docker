@@ -1,0 +1,20 @@
+version: "3.8"
+
+volumes: 
+  data:
+
+services: 
+  mongodb:
+    image: mongo:latest
+    volumes: 
+      - "data:/data/db"
+
+  nodejs:
+    image: demo-service
+    depends_on: 
+      - mongodb
+    ports: 
+      - "8001:3000"
+    environment: 
+      MONGODB_URI: mongodb://mongodb:27017/demo
+      PORT: 3000

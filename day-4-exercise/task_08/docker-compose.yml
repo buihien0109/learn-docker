@@ -1,8 +1,9 @@
 version: "3.8"
 
 services: 
-  mysql:
+  db:
     image : mysql:5.7
+    container_name: db
     networks: 
       - ghost-network
     volumes: 
@@ -12,12 +13,20 @@ services:
 
   app:
     image: ghost:alpine
+    container_name: ghost-app
+    restart: on-failure
     ports: 
       - "8088:2368"
     networks: 
       - ghost-network
     depends_on:
-      - mysql
+      - db
+    environment: 
+      - database__client=mysql
+      - database__connection__host=db
+      - database__connection__user=root
+      - database__connection__password=example
+      - database__connection__database=ghost
 
 networks: 
   ghost-network:
